@@ -10,7 +10,7 @@ from portfolio import optimize_portfolio
 
 st.title("AI Financial Analytics Platform")
 
-ticker = st.text_input("Enter Stock Ticker", "AAPL")
+ticker = st.text_input("Enter Stock Ticker", "AAPL").upper()
 
 if ticker:
     data = load_stock_data(ticker)
