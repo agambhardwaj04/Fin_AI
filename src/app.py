@@ -57,17 +57,17 @@ if ticker:
     st.write("Annual Risk:", risk)
     st.write("Sharpe Ratio:", sharpe)
 
-    st.subheader("AI Financial Assistant")
+    # st.subheader("AI Financial Assistant")
 
-    question = st.text_input("Ask about the company")
+    # question = st.text_input("Ask about the company")
 
-    if question:
+    # if question:
 
-        answer = generate_ai_insight(
-            ticker,
-            avg_return,
-            volatility,
-            questions
-        )
+    #     answer = generate_ai_insight(
+    #         ticker,
+    #         avg_return,
+    #         volatility,
+    #         questions
+    #     )
 
-        st.write(answer)
+    #     st.write(answer)
