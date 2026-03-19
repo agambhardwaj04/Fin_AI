@@ -1,22 +1,3 @@
-
-
-#     # st.subheader("AI Financial Assistant")
-
-#     # question = st.text_input("Ask about the company")
-
-#     # if question:
-
-#     #     answer = generate_ai_insight(
-#     #         ticker,
-#     #         avg_return,
-#     #         volatility,
-#     #         questions
-#     #     )
-
-#     #     st.write(answer)
-
-
-
 import streamlit as st
 import plotly.express as px
 import pandas as pd
@@ -27,14 +8,14 @@ from model import train_model
 from portfolio import optimize_portfolio
 from AI_assistant import generate_ai_insight
 
-# ── Page config ────────────────────────────────────────────────────────────────
+# ── Page config 
 st.set_page_config(
     page_title="FinAI Analytics",
     page_icon="📈",
     layout="wide"
 )
 
-# ── CSS ────────────────────────────────────────────────────────────────────────
+# ── CSS 
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Syne:wght@400;700;800&display=swap');
@@ -172,12 +153,12 @@ p, .stMarkdown p {
 </style>
 """, unsafe_allow_html=True)
 
-# ── Header ─────────────────────────────────────────────────────────────────────
+# ── Header 
 st.title("AI Financial Analytics")
 st.markdown("<p style='color:#58a6ff;font-family:IBM Plex Mono,monospace;font-size:0.8rem;'>Powered by XGBoost · Markowitz Optimization · yFinance</p>", unsafe_allow_html=True)
 st.markdown("---")
 
-# ── Input ──────────────────────────────────────────────────────────────────────
+# ── Input 
 ticker = st.text_input("Enter Stock Ticker", "AAPL").upper()
 
 if ticker:
@@ -188,7 +169,7 @@ if ticker:
     if isinstance(data.columns, pd.MultiIndex):
         data.columns = data.columns.droplevel(1)
 
-    # ── Chart ──────────────────────────────────────────────────────────────────
+    # ── Chart 
     st.subheader("Price Trend")
     fig = px.line(data, x=data.index, y="Close")
     fig.update_layout(
@@ -203,7 +184,7 @@ if ticker:
     fig.update_traces(line_color="#00d4ff", line_width=1.5)
     st.plotly_chart(fig, use_container_width=True)
 
-    # ── Model ──────────────────────────────────────────────────────────────────
+    # ── Model 
     st.subheader("ML Predictions")
     data = add_features(data)
     model, accuracy, cv_scores = train_model(data)
@@ -218,7 +199,7 @@ if ticker:
     col3.metric("Annual Return", f"{round(avg_return * 100, 2)}%")
     col4.metric("Volatility", f"{round(volatility * 100, 2)}%")
 
-    # ── Portfolio ──────────────────────────────────────────────────────────────
+    # ── Portfolio 
     st.markdown("---")
     st.subheader("Portfolio Optimization")
     stocks = ["AAPL", "MSFT", "TSLA", "NVDA", "GOOGL"]
@@ -231,7 +212,7 @@ if ticker:
 
     st.dataframe(portfolio, use_container_width=True)
 
-    # ── AI Assistant ───────────────────────────────────────────────────────────────
+# ── AI Assistant 
 st.markdown("---")
 st.subheader("AI Financial Assistant")
 st.markdown("<p style='color:#58a6ff;font-family:IBM Plex Mono,monospace;font-size:0.75rem;'>Powered by Google Gemini · Not financial advice</p>", unsafe_allow_html=True)
