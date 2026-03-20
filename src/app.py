@@ -190,10 +190,10 @@ if ticker:
     from model import load_model
 
     @st.cache_resource
-    def get_model():
-        return load_model()
+    def get_model(data_hash):
+        return train_model(data)
 
-    model, accuracy, cv_scores = get_model()
+    model, accuracy, cv_scores = get_model(len(data))
 
     col1, col2, col3, col4 = st.columns(4)
     returns = data["Close"].pct_change().dropna()
