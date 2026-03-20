@@ -1,9 +1,12 @@
 import google.generativeai as genai
 import os
 from dotenv import load_dotenv
+import streamlit as st
 
 load_dotenv()
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+api_key = os.getenv("GEMINI_API_KEY") or st.secrets["GEMINI_API_KEY"]
+
+genai.configure(api_key=api_key)
 
 def generate_ai_insight(ticker, accuracy, cv_score, avg_return, volatility, portfolio, portfolio_return, risk, sharpe, question):
 

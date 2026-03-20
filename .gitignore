@@ -4,5 +4,4 @@
 __pycache__/
 *.pyc
 *.pyo
-src/__pycache__/
 .streamlit/secrets.toml
