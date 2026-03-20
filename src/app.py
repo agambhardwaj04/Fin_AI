@@ -187,7 +187,13 @@ if ticker:
     # ── Model 
     st.subheader("ML Predictions")
     data = add_features(data)
-    model, accuracy, cv_scores = train_model(data)
+    from model import load_model
+
+    @st.cache_resource
+    def get_model():
+        return load_model()
+
+    model, accuracy, cv_scores = get_model()
 
     col1, col2, col3, col4 = st.columns(4)
     returns = data["Close"].pct_change().dropna()
@@ -198,6 +204,50 @@ if ticker:
     col2.metric("CV Score", f"{round(cv_scores * 100, 2)}%")
     col3.metric("Annual Return", f"{round(avg_return * 100, 2)}%")
     col4.metric("Volatility", f"{round(volatility * 100, 2)}%")
+    #  ── Trading Signals
+    latest_data = data.iloc[-1:][[
+    "MA_ratio", "Price_to_MA50",
+    "Momentum_5", "Momentum_10", "Momentum_20",
+    "Volatility", "Volatility_10",
+    "Volume_ratio",
+    "RSI", "BB_position"
+    ]]
+
+    prediction = model.predict(latest_data)[0]
+    signal = "BUY" if prediction == 1 else "SELL"
+
+    probs = model.predict_proba(latest_data)[0]
+    confidence = probs[1]
+
+    color_map = {
+    "BUY": "#00ff9d",
+    "HOLD": "#ffd166",
+    "SELL": "#ff4d4d"
+}
+
+    st.markdown(f"""
+    <div style="
+        background: linear-gradient(135deg, #0d1117, #0a1628);
+        border: 1px solid {color_map[signal]};
+        border-radius: 12px;
+        padding: 1.2rem;
+        text-align: center;
+        margin-bottom: 1rem;
+    ">
+    <h2 style="color:{color_map[signal]}; margin:0;">
+        {signal} SIGNAL
+    </h2>
+    <p style="color:#8b949e; font-size:0.9rem;">
+        Confidence: {round(confidence*100, 2)}%
+    </p>
+    </div>
+    """, unsafe_allow_html=True)
+    if signal == "BUY":
+        st.success("Momentum and indicators suggest upward trend 📈")
+    elif signal == "SELL":
+        st.error("Market indicators show potential downside 📉")
+    else:
+        st.warning("Market is neutral, wait for confirmation ⏳")
 
     # ── Portfolio 
     st.markdown("---")
