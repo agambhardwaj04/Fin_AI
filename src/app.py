@@ -188,12 +188,18 @@ if ticker:
     st.subheader("ML Predictions")
     data = add_features(data)
     from model import load_model
+    import os
 
     @st.cache_resource
-    def get_model(_data):  
-        return train_model(_data)
+    def get_model():
+        if os.path.exists("model.pkl"):
+            return load_model("model.pkl")
+        else:
+            st.warning("model.pkl not found — training now (this may take a minute)...")
+            return train_model(data)
 
-    model, accuracy, cv_scores = get_model(data)
+    model, accuracy, cv_scores = get_model()
+
 
     col1, col2, col3, col4 = st.columns(4)
     returns = data["Close"].pct_change().dropna()
