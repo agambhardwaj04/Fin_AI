@@ -172,10 +172,10 @@ if ticker:
     if isinstance(data.columns, pd.MultiIndex):
         data.columns = data.columns.droplevel(1)
 
-    # ── Guard: need enough data for MA200
-    if data.empty or len(data) < 250:
-        st.error(f"Not enough data for '{ticker}'. Try a valid ticker like AAPL, MSFT, TSLA.")
-        st.stop()
+    # # ── Guard: need enough data for MA200
+    # if data.empty or len(data) < 250:
+    #     st.error(f"Not enough data for '{ticker}'. Try a valid ticker like AAPL, MSFT, TSLA.")
+    #     st.stop()
 
     # ── Chart
     st.subheader("Price Trend")
