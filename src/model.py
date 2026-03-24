@@ -16,7 +16,7 @@ def train_model(data):
     "Volatility", "Volatility_10",
     "Volume_ratio",
     "RSI", "BB_position"
-]]
+  ]]
   y = data["Target"]
   X, y = X.align(y, join="inner", axis=0)
 

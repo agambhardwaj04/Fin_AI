@@ -4,7 +4,7 @@ import pandas as pd
 
 from data_loader import load_stock_data
 from features import add_features
-from model import train_model
+from model import train_model, load_model
 from portfolio import optimize_portfolio
 from AI_assistant import generate_ai_insight
 
