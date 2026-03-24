@@ -192,8 +192,8 @@ if ticker:
 
     @st.cache_resource
     def get_model():
-        if os.path.exists("model.pkl"):
-            return load_model("model.pkl")
+        if os.path.exists(""):
+            return load_model("src/model.pkl")
         else:
             st.warning("model.pkl not found — training now (this may take a minute)...")
             return train_model(data)

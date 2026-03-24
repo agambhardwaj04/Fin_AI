@@ -45,7 +45,9 @@ def train_model(data):
     ])
 
   # Time Series cross-validation
-  tscv = TimeSeriesSplit(n_splits=5)
+  n_splits = min(5, len(X_train) // 50)  # at least 50 samples per fold
+  n_splits = max(2, n_splits)            # minimum 2 splits
+  tscv = TimeSeriesSplit(n_splits=n_splits)
 
   cv_scores = cross_val_score(
     pipeline, X_train, y_train, 
