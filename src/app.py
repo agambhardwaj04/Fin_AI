@@ -147,7 +147,7 @@ st.title("AI Financial Analytics")
 st.markdown("<p style='color:#58a6ff;font-family:IBM Plex Mono,monospace;font-size:0.8rem;'>Powered by XGBoost · Markowitz Optimization · yFinance</p>", unsafe_allow_html=True)
 st.markdown("---")
 
-# ── Load model once at startup (outside ticker block)
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_PATH = os.path.join(BASE_DIR, "model.pkl")
 
