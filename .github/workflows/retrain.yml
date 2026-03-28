@@ -1,0 +1,37 @@
+name: Retrain Model Weekly
+
+on:
+  schedule:
+    - cron: "0 0 * * 1"   # Every Monday at midnight UTC
+  workflow_dispatch:        # Manual trigger from GitHub Actions tab
+
+jobs:
+  retrain:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Retrain model
+        run: |
+          cd src
+          python model.py
+
+      - name: Commit and push new model.pkl
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/model.pkl
+          git diff --staged --quiet || git commit -m "🤖 Auto retrain model - $(date '+%Y-%m-%d')"
+          git push
