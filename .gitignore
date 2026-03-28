@@ -6,4 +6,4 @@ __pycache__/
 *.pyo
 .streamlit/secrets.toml
 app.txt
-.devcontainer/
+.devcontainer
